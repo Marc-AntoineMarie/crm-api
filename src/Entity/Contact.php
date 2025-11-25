@@ -8,12 +8,18 @@ use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ApiResource(
     paginationEnabled: true,
     paginationItemsPerPage: 10,
 )]
 
+#[ApiFilter(SearchFilter::class, properties: [
+    'firstname' => 'partial',
+    'lastname' => 'partial',
+    'client' => 'exact',
+])]
 #[ApiFilter(OrderFilter::class, properties: ['firstname', 'lastname'], arguments: ['orderParameterName' => 'order'])]
 #[ORM\Entity(repositoryClass: ContactRepository::class)]#[ApiResource]
 class Contact
